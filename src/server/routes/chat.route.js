@@ -10,6 +10,7 @@ const router = express.Router();
 
 router.post('/callback', (req, res, next) => {
   console.log(req.body);
+  res.statusCode(200).json();
 });
 
 export default router;

@@ -5,6 +5,7 @@ let keySchema = new Schema({
   index: Number,
   accessKeyId: String,
   secretAccessKey: String,
+  jwrKey: String,
 });
 
 export default mongoose.model('key', keySchema);

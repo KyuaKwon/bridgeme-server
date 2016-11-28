@@ -8,10 +8,8 @@ import * as user from '../controllers/users.controller';
 
 const router = express.Router();
 
-
-router.post('/callback', (req,res,next) => {
+router.post('/callback', (req, res, next) => {
   console.log(req.body);
 });
-
 
 export default router;

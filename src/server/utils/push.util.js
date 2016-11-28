@@ -15,25 +15,25 @@ export default {
   NOTIFICATION_TYPE: {
     NEW_REQUEST: {
       title: 'New Request',
-      bodyParam: ' has requested a connection to you.'
+      bodyParam: ' has requested a connection to you.',
     },
     NEW_CONNECTION: {
       title: 'New Connection',
-      bodyParam: ' and you are connected now.'
+      bodyParam: ' and you are connected now.',
     },
     NEW_MESSAGE: {
       title: 'New Message',
-      bodyParam: 'You’ve got new message.'
+      bodyParam: 'You’ve got new message.',
     },
     DEFAULT: {
       title: 'EMPTY Message',
-      bodyParam: ''
-    }
+      bodyParam: '',
+    },
   },
 
   sendPush(userId, extraData, notificationType, bodyParam = '') {
     if (NOTIFICATION_TYPE[notificationType]) {
-      User.findOne({_id: userId}).exec()
+      User.findOne({ _id: userId }).exec()
         .then(userProfile => {
           const message = {
             to: `/topics/${userId}`,
@@ -52,7 +52,7 @@ export default {
             })
             .catch(function (err) {
               console.error(err);
-            })
+            });
         })
         .catch((err) => {
 
@@ -60,7 +60,7 @@ export default {
     }
   },
 
-  generateBody(notificationType, bodyParam){
+  generateBody(notificationType, bodyParam) {
     if (notificationType) {
       return `${bodyParam}${notificationType.bodyParam}`;
     }

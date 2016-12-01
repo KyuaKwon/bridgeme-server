@@ -117,7 +117,6 @@ export function localSignUp(req, res, next) {
     })
     .then(stampedUser => {
       if (stampedUser) {
-        console.log(stampedUser);
         res.status(201).json({
           user: stampedUser,
           access_token: jwtUtil.createAccessToken(stampedUser),
@@ -127,7 +126,6 @@ export function localSignUp(req, res, next) {
       }
     })
     .catch(err => {
-      console.log(err);
       res.status(400).json({ err_msg: err.message });
     });
 }

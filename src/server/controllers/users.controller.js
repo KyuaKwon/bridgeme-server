@@ -107,15 +107,17 @@ export function localSignUp(req, res, next) {
       if (existingUser) {
         res.status(201).json({ msg: userCallback.ERR_EXISTING_EMAIL });
       } else {
-        registrationData.deviceToken = req.body.deviceToken;
         return User(registrationData).save();
       }
     })
     .then(registeredUser => {
+      registeredUser.deviceToken.push(req.body.deviceToken);
+      registeredUser.save();
       return stampUser(registeredUser);
     })
     .then(stampedUser => {
       if (stampedUser) {
+        console.log(stampedUser);
         res.status(201).json({
           user: stampedUser,
           access_token: jwtUtil.createAccessToken(stampedUser),
@@ -125,6 +127,7 @@ export function localSignUp(req, res, next) {
       }
     })
     .catch(err => {
+      console.log(err);
       res.status(400).json({ err_msg: err.message });
     });
 }
@@ -259,9 +262,10 @@ export function signIn(req, res, next) {
       })
       .then((existingUser) => {
         if (!existingUser) {
-          registrationData.deviceToken = req.body.deviceToken;
           new User(registrationData).save()
             .then((registeredUser) => {
+              registeredUser.deviceToken.push(req.body.deviceToken);
+              registeredUser.save();
               return stampUser(registeredUser);
             })
             .then((stampedUser) => {
